@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.AnasayfaFragment"
+    android:orientation="vertical">
+
+    <!-- TODO: Update blank fragment layout -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:id="@+id/menuuu">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <Button android:id="@+id/anaYemek"
+                        android:text="Anayemekler"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:layout_marginRight="12dp"
+                        android:layout_marginLeft="3dp"></Button>
+                    <Button android:id="@+id/corbalar"
+                        android:text="Çorbalar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="12dp"
+                        android:background="@android:color/transparent"></Button>
+                    <Button android:id="@+id/salata"
+                        android:text="Salata ve Turşu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:layout_marginRight="12dp"></Button>
+                    <Button android:id="@+id/hamur"
+                        android:text="Hamur işi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:layout_marginRight="12dp"></Button>
+                    <Button android:id="@+id/pilav"
+                        android:text="Pilavlar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:layout_marginRight="12dp"></Button>
+                    <Button android:id="@+id/tatlılar"
+                        android:text="Tatlılar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:layout_marginRight="12dp"></Button>
+
+                </LinearLayout>
+            </LinearLayout>
+        </HorizontalScrollView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Burda seçilen ana kategoriye ait alt kategorileri listeleyeceğim"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_below="@+id/menuuu"
+            />
+
+    </RelativeLayout>
+
+
+</FrameLayout>
