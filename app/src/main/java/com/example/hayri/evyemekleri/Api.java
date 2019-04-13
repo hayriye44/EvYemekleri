@@ -10,7 +10,6 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Query;
 
 /**
  * Created by Kamere on 9/1/2018.
@@ -33,6 +32,10 @@ public interface Api {
     @POST("yemekler.php")
     @FormUrlEncoded
     Call<YemekList> getFoods(@Field("kul_id") int kul_id);
+
+    @POST("tümyemekler.php")
+    @FormUrlEncoded
+    Call<YemekList> getAllFoods(@Field("kat_id") int kat_id);
 
     @POST("yemekEkle.php")
     @FormUrlEncoded

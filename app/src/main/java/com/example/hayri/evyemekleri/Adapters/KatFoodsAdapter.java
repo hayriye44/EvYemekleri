@@ -16,37 +16,34 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class YemekAdapter extends  RecyclerView.Adapter<YemekAdapter.ViewHolder>{
-        List<FoodsItem> list;
-        Context context;
+public class KatFoodsAdapter extends RecyclerView.Adapter<KatFoodsAdapter.ViewHolder> {
 
-public YemekAdapter(List<FoodsItem> list, Context context) {
+    List<FoodsItem> list;
+    Context context;
+
+
+    public KatFoodsAdapter(List<FoodsItem> list, Context context) {
         this.list = list;
         this.context = context;
-        }
+    }
     @NonNull
     @Override
-    public YemekAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         //Listview için oluşturduğumuz layoutu tanımlama
-        View view=LayoutInflater.from(context).inflate(R.layout.foodlistitemlayout,viewGroup,false);
-        return new YemekAdapter.ViewHolder(view);
+        View view=LayoutInflater.from(context).inflate(R.layout.katfoodlistitem,viewGroup,false);
+        return new ViewHolder(view);
 
     }
 
     @Override
-    public int getItemCount() {
-        return list.size();
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull YemekAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         //tanımlama atama işlemi
         int katno=Integer.valueOf(list.get(i).getKatId());
         String katAdi;
         switch (katno) {
             case 2 :
                 katAdi="Anayemekler";
-            break;
+                break;
 
             case 3 :
                 katAdi="Çorbalar";
@@ -79,17 +76,20 @@ public YemekAdapter(List<FoodsItem> list, Context context) {
         Picasso.get().load(list.get(i).getYemekresim()).into(viewHolder.ivYemekResmi);
 
     }
-    public class ViewHolder extends RecyclerView.ViewHolder
-    {
-        Button btnYemekSil;
+
+    @Override
+    public int getItemCount() {
+        return list.size();
+    }
+
+    //view elemanları tanımı için
+    public class ViewHolder extends RecyclerView.ViewHolder{
+
         ImageView ivYemekResmi;
         TextView tvKategori,tvYemekAdi,tvYemekMiktari,tvYemekFiyati,tvYemekPuani;
-
-
-        //itemView ile listviewin her ıtemi için layout ile oluşturduğumuz view tanımlanması işlemi gerçekleştirilecek
         public ViewHolder(View itemView) {
+            //itemview ile listviewin her elemanı için layout ile oluşturduğumuz viewin tanımlanması işlemi gerçekleşecek
             super(itemView);
-            btnYemekSil=(Button)itemView.findViewById(R.id.foodDelete);
             ivYemekResmi=(ImageView) itemView.findViewById(R.id.ivYemekResmi);
             tvKategori=(TextView) itemView.findViewById(R.id.tvKategori);
             tvYemekAdi=(TextView) itemView.findViewById(R.id.tvYemekAdi);
@@ -98,7 +98,6 @@ public YemekAdapter(List<FoodsItem> list, Context context) {
             tvYemekPuani=(TextView) itemView.findViewById(R.id.tvYemekPuani);
 
         }
+        //Layout oluşturucaz ıtem tasarımı  için
     }
-
-
 }

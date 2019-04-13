@@ -65,13 +65,19 @@
                 </LinearLayout>
             </LinearLayout>
         </HorizontalScrollView>
-        <TextView
+        <android.support.v7.widget.CardView
+            android:id="@+id/cvyemekler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Burda seçilen ana kategoriye ait alt kategorileri listeleyeceğim"
-            android:textColor="@color/colorPrimaryDark"
-            android:layout_below="@+id/menuuu"
-            />
+            android:layout_marginTop="50dp"
+            >
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/rvKatYemekler"
+                    ></android.support.v7.widget.RecyclerView>
+
+        </android.support.v7.widget.CardView>
 
     </RelativeLayout>
 

@@ -84,18 +84,18 @@ public class FoodsItem{
 	}
 
 	@Override
- 	public String toString(){
-		return 
-			"FoodsItem{" + 
-			"kul_id = '" + kulid + '\'' +
-			",yemek_fiyat = '" + yemekfiyat + '\'' +
-			",yorum_puani = '" + yorumpuani + '\'' +
-			",yemekresim = '" + yemekresim + '\'' + 
-			",yemek_id = '" + yemekid + '\'' +
-			",sehir_id = '" + sehirid + '\'' +
-			",miktar = '" + miktar + '\'' + 
-			",yemek_adi = '" + yemekadi + '\'' +
-			",kat_id = '" + katid + '\'' +
-			"}";
-		}
+	public String toString(){
+		return
+				"FoodsItem{" +
+						"kul_id = '" + kulid + '\'' +
+						",yemek_fiyat = '" + yemekfiyat + '\'' +
+						",yorum_puani = '" + yorumpuani + '\'' +
+						",yemekresim = '" + yemekresim + '\'' +
+						",yemek_id = '" + yemekid + '\'' +
+						",sehir_id = '" + sehirid + '\'' +
+						",miktar = '" + miktar + '\'' +
+						",yemek_adi = '" + yemekadi + '\'' +
+						",kat_id = '" + katid + '\'' +
+						"}";
+	}
 }
