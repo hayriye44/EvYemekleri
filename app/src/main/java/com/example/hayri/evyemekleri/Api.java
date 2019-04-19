@@ -1,5 +1,7 @@
 package com.example.hayri.evyemekleri;
 
+import com.example.hayri.evyemekleri.Models.IletisimBilgiEkle;
+import com.example.hayri.evyemekleri.Models.KulAdi;
 import com.example.hayri.evyemekleri.Models.Model;
 import com.example.hayri.evyemekleri.Models.SehirList;
 import com.example.hayri.evyemekleri.Models.YemekEkle;
@@ -26,6 +28,10 @@ public interface Api {
     @FormUrlEncoded
     Call<Model> login(@Field("username") String username, @Field("password") String password);
 
+    @POST("kulAdi.php")
+    @FormUrlEncoded
+    Call<KulAdi> kulAdi(@Field("id") int id);
+
     @GET("citys.php")
     Call<SehirList> getCitys();
 
@@ -41,6 +47,9 @@ public interface Api {
     @FormUrlEncoded
     Call<YemekEkle> yemekEkle(@Field("kat_id") int kat_id, @Field("kul_id") int kul_id, @Field("yemek_adi") String yemek_adi, @Field("yemek_fiyat") double yemek_fiyat, @Field("yorum_puani") int yorum_puani,@Field("sehir_id") int sehir_id, @Field("yemekresim") String yemekresim, @Field("miktar") String miktar);
 
+    @POST("iletisimBilgiEkle.php")
+    @FormUrlEncoded
+    Call<IletisimBilgiEkle> iletisimBilgiEkle( @Field("kul_id") int kul_id, @Field("sehirAdi") String sehirAdi, @Field("adres_aciklama") String adres_aciklama, @Field("tel") String tel);
 
 }
 

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.hayri.evyemekleri.Adapters.KatFoodsAdapter;
@@ -36,17 +37,54 @@ public class AnasayfaFragment extends Fragment {
     RecyclerView rvYemekler;
     List<FoodsItem> foodList;
     KatFoodsAdapter yemekAdapter;
+    Button anaYemek,corbalar,salata,hamur,pilav,tatlılar;
     public AnasayfaFragment() {
+
         // Required empty public constructor
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view=inflater.inflate(R.layout.fragment_anasayfa, container, false);
-
+          view=inflater.inflate(R.layout.fragment_anasayfa, container, false);
+        Button anaYemek = (Button)view.findViewById(R.id.anaYemek);
+        Button corbalar = (Button)view.findViewById(R.id.corbalar);
+        Button salata = (Button)view.findViewById(R.id.salata);
+        Button hamur = (Button)view.findViewById(R.id.hamur);
+        Button pilav = (Button)view.findViewById(R.id.pilav);
+        Button tatlılar = (Button)view.findViewById(R.id.tatlılar);
+        anaYemek.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                AllFoodList(2);
+            }
+        });
+        corbalar.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                AllFoodList(3);
+            }
+        });
+        salata.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                AllFoodList(4);
+            }
+        });
+        hamur.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                AllFoodList(5);
+            }
+        });
+        pilav.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                AllFoodList(6);
+            }
+        });
+        tatlılar.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                AllFoodList(7);
+            }
+        });
         rvYemekler=view.findViewById(R.id.rvKatYemekler);
-        RecyclerView.LayoutManager layoutManager=new GridLayoutManager(getContext(),1);
+        RecyclerView.LayoutManager layoutManager=new GridLayoutManager(getContext(),2);
         rvYemekler.setLayoutManager(layoutManager);
         foodList=new ArrayList<>();
 
@@ -74,7 +112,7 @@ public class AnasayfaFragment extends Fragment {
             }
             @Override
             public void onFailure(Call<YemekList> call, Throwable t) {
-                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                 Toast.makeText(getContext(), "Bu kategoride ürün bulunmamakta", Toast.LENGTH_SHORT).show();
                 Log.d("error-------------->",t.getLocalizedMessage());
             }
         });

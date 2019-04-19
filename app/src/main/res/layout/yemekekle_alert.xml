@@ -54,6 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:hint="Yemek Fiyatını Giriniz"
+        android:inputType="number"
         />
     <ImageView
         android:id="@+id/ivYemekResim"
@@ -62,6 +63,8 @@
         android:layout_gravity="center"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
         android:visibility="gone"/>
     <LinearLayout
         android:layout_width="match_parent"

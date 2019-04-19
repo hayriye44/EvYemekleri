@@ -28,6 +28,7 @@
             android:label="@string/app_name" />
         <activity android:name=".KaydolActivity" />
         <activity android:name=".İlSecim" />
+        <activity android:name=".YemekDetay"></activity>
     </application>
 
 </manifest>

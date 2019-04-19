@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp"
+        android:text="İletişim Bilgilerinizi Ekleyebilirsiniz"
+        />
+
+
+
+    <EditText
+        android:id="@+id/etSehir"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:hint="Şehrinizi türkçe karakter içermeden giriniz"
+        />
+    <EditText
+        android:id="@+id/etAdres"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:hint="Tam Adresinizi Giriniz"
+        />
+    <EditText
+         android:id="@+id/etTel"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_margin="5dp"
+         android:hint="Telefon Numaranızı Giriniz"
+         android:inputType="number"
+         android:maxLength="11"
+
+    />
+    <Button
+        android:id="@+id/btnİletisimBilgisiEkle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="20dp"
+        android:text="İletisim Bilgilerini Ekle"
+        android:background="@color/primary_light"/>
+
+
+
+
+</LinearLayout>

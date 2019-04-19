@@ -19,7 +19,7 @@
                 android:id="@+id/cv_kulbilgiler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                app:cardBackgroundColor="@color/colorPrimary"
                 >
 
                 <LinearLayout
@@ -28,15 +28,14 @@
                     android:padding="5dp"
                     android:orientation="horizontal"
                     >
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        xmlns:app="http://schemas.android.com/apk/res-auto"
+
+                    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/profile"
-                        android:layout_width="110dp"
-                        android:layout_height="100dp"
-                        android:layout_margin="10dp"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
                         android:layout_centerHorizontal="true"
-                        android:src="@drawable/man"
-                        />
+                        android:layout_margin="5dp"
+                        android:src="@drawable/man" />
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -53,6 +52,7 @@
                             android:text="Username : "
                             android:textSize="20dp"
                             android:textStyle="bold"
+                            android:textColor="#ffff"
                             />
                         <TextView
                             android:layout_width="wrap_content"
@@ -62,13 +62,14 @@
                             android:textSize="20dp"
                             android:layout_marginTop="10dp"
                             android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"/>
+                            android:layout_alignParentTop="true"
+                            android:textColor="#ffff"/>
                         <Button
                             android:id="@+id/btnLogout"
-                            android:layout_width="109dp"
+                            android:layout_width="match_parent"
                             android:layout_height="30dp"
                             android:layout_marginTop="10dp"
-                            android:background="@color/colorPrimary"
+                            android:background="#ffff"
                             android:text="Log Out"
                             android:textAllCaps="false"
                             android:textSize="20dp"/>
@@ -80,13 +81,14 @@
             <android.support.v7.widget.CardView
                 android:id="@+id/cv_iletisim"
                 android:layout_width="match_parent"
-                android:layout_height="140dp"
+                android:layout_height="300dp"
                 android:layout_margin="10dp"
-                app:cardBackgroundColor="@color/primary_light"
+                app:cardElevation="5dp"
+                app:cardCornerRadius="10dp"
                 >
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="140dp"
+                    android:layout_height="300dp"
                     android:orientation="vertical">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -113,12 +115,11 @@
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="10dp"/>
                     </LinearLayout>
+
                     <android.support.v7.widget.RecyclerView
-                        android:layout_width="match_parent"
-                        android:background="@color/primary_light"
-                        android:layout_height="100dp"
                         android:id="@+id/rvYemekler"
-                        ></android.support.v7.widget.RecyclerView>
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 
 
 
@@ -130,7 +131,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_margin="10dp"
-                app:cardBackgroundColor="@color/primary_light"
+                app:cardElevation="5dp"
+                app:cardCornerRadius="10dp"
                 >
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -158,12 +160,14 @@
                             android:layout_height="20dp"
                             android:background="@drawable/list_icon"
                             android:layout_marginTop="10dp"/>
+
                         <ImageView
+                            android:id="@+id/add_iletisim_button"
                             android:layout_width="0dp"
-                            android:layout_weight="0.8"
                             android:layout_height="30dp"
                             android:layout_margin="10dp"
-                            android:background="@drawable/add_button"/>
+                            android:layout_weight="0.8"
+                            android:background="@drawable/add_button" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -173,7 +177,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_margin="10dp"
-                app:cardBackgroundColor="@color/primary_light"
+                app:cardElevation="5dp"
+                app:cardCornerRadius="10dp"
                 >
                 <LinearLayout
                 android:layout_width="match_parent"
@@ -207,9 +212,10 @@
             <android.support.v7.widget.CardView
                 android:id="@+id/cv_puanla"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:layout_margin="10dp"
-                app:cardBackgroundColor="@color/primary_light"
+                app:cardElevation="5dp"
+                app:cardCornerRadius="10dp"
                 >
                 <LinearLayout
                     android:layout_width="match_parent"

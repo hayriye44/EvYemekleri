@@ -20,6 +20,7 @@ package com.example.hayri.evyemekleri.Fragments;
         import android.widget.EditText;
         import android.widget.ImageView;
         import android.widget.Spinner;
+        import android.widget.SpinnerAdapter;
         import android.widget.TextView;
         import android.widget.Toast;
 
@@ -27,7 +28,10 @@ package com.example.hayri.evyemekleri.Fragments;
         import com.example.hayri.evyemekleri.Adapters.YemekAdapter;
         import com.example.hayri.evyemekleri.Api;
         import com.example.hayri.evyemekleri.ApiClient;
+        import com.example.hayri.evyemekleri.MainActivity;
+        import com.example.hayri.evyemekleri.Models.CitysItem;
         import com.example.hayri.evyemekleri.Models.FoodsItem;
+        import com.example.hayri.evyemekleri.Models.IletisimBilgiEkle;
         import com.example.hayri.evyemekleri.Models.SehirList;
         import com.example.hayri.evyemekleri.Models.YemekEkle;
         import com.example.hayri.evyemekleri.Models.YemekList;
@@ -52,25 +56,31 @@ package com.example.hayri.evyemekleri.Fragments;
 public class ProfilFragment extends Fragment {
     TextView username;
     Button btnLogout;
-    ImageView yemekEkleIv;
+    ImageView yemekEkleIv,iletisimBilgisiEkleIv;
     ImageView yemekResmi;
     RecyclerView rvYemekler;
     List<FoodsItem> foodList;
+    List<CitysItem>cityList;
+
     YemekAdapter yemekAdapter;
+    private CityAdapter citysAdapter;
+
 
     Bitmap bitmap;
     int kat_ıd;
     int kul_id;
     private View myFragment;
-    String imageString;
+    String imageString;String ilAdi;
     Vibrator v;
     //change to your register url
     final String yemekEkleUrl = "http://ysiparis.tk/yemekEkle.php";
     private String[] kategoriler={"Anayemekler","Çorbalar","Salata ve Turşular","Hamur İşleri","Pilavlar","Tatlılar"};
+    private  String[] iller=new String[81];
     //Spinner'ları ve Adapter'lerini tanımlıyoruz
-    private Spinner spinnerkategoriler;
+    private Spinner spinnerkategoriler,spinneriller;
     private ArrayAdapter<String> dataAdapterKategoriler;
-    EditText yemekFiyati,yemekAdi,yemekMiktari;
+
+    EditText yemekFiyati,yemekAdi,yemekMiktari,adres,tel,il;
     public ProfilFragment() {
         // Required empty public constructor
     }
@@ -82,10 +92,12 @@ public class ProfilFragment extends Fragment {
         username = myFragment.findViewById(R.id.username);
         btnLogout = myFragment.findViewById(R.id.btnLogout);
         yemekEkleIv=myFragment.findViewById(R.id.add_yemek_button);
+        iletisimBilgisiEkleIv=myFragment.findViewById(R.id.add_iletisim_button);
         rvYemekler=myFragment.findViewById(R.id.rvYemekler);
         RecyclerView.LayoutManager layoutManager=new GridLayoutManager(getContext(),1);
         rvYemekler.setLayoutManager(layoutManager);
         foodList=new ArrayList<>();
+        cityList=new ArrayList<>();
 
         bitmap=null;
         imageString="";
@@ -93,6 +105,13 @@ public class ProfilFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 addYemekAlert();
+            }
+        });
+        iletisimBilgisiEkleIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                addİletisimAlert();
             }
         });
         //getting logged in user name
@@ -107,15 +126,14 @@ public class ProfilFragment extends Fragment {
                 SharedPref.getInstance(getContext()).logout();
             }
         });
-
-       yemekListele(3);
-
+        yemekListele(kul_id);
+        //iller();
         return myFragment;
     }
     public void addYemekAlert()
     {
         LayoutInflater layoutInflater=this.getLayoutInflater();
-        View view=layoutInflater.inflate(R.layout.yemekekle_alert,null);
+        final View view=layoutInflater.inflate(R.layout.yemekekle_alert,null);
         yemekAdi=(EditText)view.findViewById(R.id.etYemekAdi);
         yemekFiyati=(EditText)view.findViewById(R.id.yemekFiyat);
         yemekMiktari=(EditText)view.findViewById(R.id.yemekMiktar);
@@ -139,7 +157,7 @@ public class ProfilFragment extends Fragment {
             }
         });
        // ImageView yemekResim=(ImageView)view.findViewById(R.id.imgYemek);
-        Button yemekEkleButton=(Button)view.findViewById(R.id.btnYemekEkle);
+        final Button yemekEkleButton=(Button)view.findViewById(R.id.btnYemekEkle);
         Button resimSecButton=(Button)view.findViewById(R.id.btnResimSec);
         resimSecButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,12 +175,51 @@ public class ProfilFragment extends Fragment {
                  double yemekFiy= Double.parseDouble(yemekFiyati.getText().toString());
                  addYemek(kat_ıd,kul_id,yemekName,yemekFiy,7,44,imageToString(),miktar);
                  yemekAdi.setText("");
+                 yemekMiktari.setText("");
                  yemekFiyati.setText("");
+                 yemekResmi.setVisibility(View.INVISIBLE);
              }
              else
              {
                  Toast.makeText(getContext(),"Tüm alanların doldurulması ve resmin seçilmesi zorunludur",Toast.LENGTH_LONG).show();
              }
+            }
+        });
+        //alertDialog
+        AlertDialog.Builder alert=new AlertDialog.Builder(getContext());
+        alert.setView(view);
+        alert.setCancelable(true);
+        final AlertDialog alertDialog=alert.create();
+        alertDialog.show();
+    }
+
+
+    public void addİletisimAlert()
+    {
+        LayoutInflater layoutInflater=this.getLayoutInflater();
+        final View view=layoutInflater.inflate(R.layout.iletisimekle_alert,null);
+
+        adres=(EditText)view.findViewById(R.id.etAdres);
+        tel=(EditText)view.findViewById(R.id.etTel);
+        il=(EditText)view.findViewById(R.id.etSehir);
+        final Button iletisimEkleButton=(Button)view.findViewById(R.id.btnİletisimBilgisiEkle);
+        iletisimEkleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if( !adres.getText().toString().equals("")&&!tel.getText().toString().equals(""))
+                {
+                    String adresName= adres.getText().toString();
+                    String telNo=tel.getText().toString();
+                    String ilAdi=il.getText().toString();
+                    addİletisim(kul_id,ilAdi,adresName,telNo);
+                    tel.setText("");
+                    adres.setText("");
+                    il.setText("");
+                }
+                else
+                {
+                    Toast.makeText(getContext(),"Tüm alanların doldurulması ve resmin seçilmesi zorunludur",Toast.LENGTH_LONG).show();
+                }
             }
         });
         //alertDialog
@@ -187,12 +244,28 @@ public class ProfilFragment extends Fragment {
             }
         });
     }
+
+    private void addİletisim(int kul_id, String sehirAdi,String adres_aciklama,String tel) {
+        //making api call
+        Api api = ApiClient.getClient().create(Api.class);
+        Call<IletisimBilgiEkle> iletisimBilgiEkleCall = api.iletisimBilgiEkle(kul_id,sehirAdi,adres_aciklama,tel);
+        iletisimBilgiEkleCall.enqueue(new Callback<IletisimBilgiEkle>() {
+            @Override
+            public void onResponse(Call<IletisimBilgiEkle> call, Response<IletisimBilgiEkle> response) {
+                Toast.makeText(getContext(),response.body().getMessage(),Toast.LENGTH_LONG).show();
+            }
+            @Override
+            public void onFailure(Call<IletisimBilgiEkle> call, Throwable t) {
+                // Toast.makeText(ProfilFragment.this,t.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     void galeriAc()
     {Intent intent=new Intent();
     intent.setType("image/*");
     intent.setAction(Intent.ACTION_GET_CONTENT);
     startActivityForResult(intent,777);
-
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -224,6 +297,7 @@ public class ProfilFragment extends Fragment {
     }
     public void yemekListele(int kul_id)
     {
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ApiClient.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create()) //Here we are using the GsonConverterFactory to directly convert json data to object
@@ -245,4 +319,6 @@ public class ProfilFragment extends Fragment {
             }
         });
     }
+
+
 }
