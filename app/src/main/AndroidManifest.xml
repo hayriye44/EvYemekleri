@@ -28,7 +28,8 @@
             android:label="@string/app_name" />
         <activity android:name=".KaydolActivity" />
         <activity android:name=".İlSecim" />
-        <activity android:name=".YemekDetay"></activity>
+        <activity android:name=".YemekDetay" />
+        <activity android:name=".İletisimBilgisiGoster"></activity>
     </application>
 
 </manifest>

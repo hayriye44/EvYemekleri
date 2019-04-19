@@ -17,8 +17,10 @@ import com.example.hayri.evyemekleri.Adapters.YemekAdapter;
 import com.example.hayri.evyemekleri.Api;
 import com.example.hayri.evyemekleri.ApiClient;
 import com.example.hayri.evyemekleri.Models.FoodsItem;
+import com.example.hayri.evyemekleri.Models.Iletisim;
 import com.example.hayri.evyemekleri.Models.YemekList;
 import com.example.hayri.evyemekleri.R;
+import com.example.hayri.evyemekleri.SharedPref;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +39,7 @@ public class AnasayfaFragment extends Fragment {
     RecyclerView rvYemekler;
     List<FoodsItem> foodList;
     KatFoodsAdapter yemekAdapter;
-    Button anaYemek,corbalar,salata,hamur,pilav,tatlılar;
+    int kul_id;
     public AnasayfaFragment() {
 
         // Required empty public constructor
@@ -53,53 +55,58 @@ public class AnasayfaFragment extends Fragment {
         Button hamur = (Button)view.findViewById(R.id.hamur);
         Button pilav = (Button)view.findViewById(R.id.pilav);
         Button tatlılar = (Button)view.findViewById(R.id.tatlılar);
+
+
+        kul_id=SharedPref.getInstance(getActivity()).LoggedInUserId();
+
         anaYemek.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                AllFoodList(2);
+                iletisimBilgisiGoster(kul_id,2);
             }
         });
         corbalar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                AllFoodList(3);
+                iletisimBilgisiGoster(kul_id,3);
             }
         });
         salata.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                AllFoodList(4);
+                iletisimBilgisiGoster(kul_id,4);
             }
         });
         hamur.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                AllFoodList(5);
+                iletisimBilgisiGoster(kul_id,5);
             }
         });
         pilav.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                AllFoodList(6);
+                iletisimBilgisiGoster(kul_id,6);
             }
         });
         tatlılar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                AllFoodList(7);
+                iletisimBilgisiGoster(kul_id,7);
             }
         });
         rvYemekler=view.findViewById(R.id.rvKatYemekler);
         RecyclerView.LayoutManager layoutManager=new GridLayoutManager(getContext(),2);
         rvYemekler.setLayoutManager(layoutManager);
         foodList=new ArrayList<>();
+        iletisimBilgisiGoster(kul_id,2);
+        //AllFoodList(2);
 
-        AllFoodList(2);
         return view;
     }
 
-    public void AllFoodList(int kat_id)
+    public void AllFoodList(int kat_id,int il_id)
     {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ApiClient.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create()) //Here we are using the GsonConverterFactory to directly convert json data to object
                 .build();
         Api api = retrofit.create(Api.class);
-        Call<YemekList> call = api.getAllFoods(kat_id);
+        Call<YemekList> call = api.getAllFoods(kat_id,il_id);
         call.enqueue(new Callback<YemekList>() {
             @Override
             public void onResponse(Call<YemekList> call, Response<YemekList> response) {
@@ -117,4 +124,35 @@ public class AnasayfaFragment extends Fragment {
             }
         });
     }
+
+
+    public void iletisimBilgisiGoster(final int kul_id, final int kat_id){
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ApiClient.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create()) //Here we are using the GsonConverterFactory to directly convert json data to object
+                .build();
+        Api api = retrofit.create(Api.class);
+        Call<Iletisim> call = api.getIletisimBilgisi(kul_id);
+        call.enqueue(new Callback<Iletisim>() {
+
+            @Override
+            public void onResponse(Call<Iletisim> call, Response<Iletisim> response) {
+                Log.i("kul",""+kul_id);
+                int il_id=Integer.valueOf(response.body().getIlid());
+                AllFoodList(kat_id,il_id);
+            }
+            @Override
+            public void onFailure(Call<Iletisim> call, Throwable t) {
+                // Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.d("error-------------->",t.getLocalizedMessage());
+
+            }
+        });
+
+    }
+
+
+
+
 }
