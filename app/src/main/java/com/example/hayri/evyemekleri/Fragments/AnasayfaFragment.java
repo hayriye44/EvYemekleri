@@ -1,8 +1,13 @@
 package com.example.hayri.evyemekleri.Fragments;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -49,6 +54,11 @@ public class AnasayfaFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
           view=inflater.inflate(R.layout.fragment_anasayfa, container, false);
+
+
+
+
+
         Button anaYemek = (Button)view.findViewById(R.id.anaYemek);
         Button corbalar = (Button)view.findViewById(R.id.corbalar);
         Button salata = (Button)view.findViewById(R.id.salata);
@@ -58,6 +68,8 @@ public class AnasayfaFragment extends Fragment {
 
 
         kul_id=SharedPref.getInstance(getActivity()).LoggedInUserId();
+
+
 
         anaYemek.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -94,8 +106,9 @@ public class AnasayfaFragment extends Fragment {
         rvYemekler.setLayoutManager(layoutManager);
         foodList=new ArrayList<>();
         iletisimBilgisiGoster(kul_id,2);
-        //AllFoodList(2);
 
+        //AllFoodList(2);
+        Log.i("kulıdAnasayfa",""+kul_id);
         return view;
     }
 
@@ -140,12 +153,38 @@ public class AnasayfaFragment extends Fragment {
             public void onResponse(Call<Iletisim> call, Response<Iletisim> response) {
                 Log.i("kul",""+kul_id);
                 int il_id=Integer.valueOf(response.body().getIlid());
+                String il=String.valueOf(il_id);
+                Log.i("ilii","ilii:"+String.valueOf(il_id));
                 AllFoodList(kat_id,il_id);
+
             }
             @Override
             public void onFailure(Call<Iletisim> call, Throwable t) {
                 // Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.d("error-------------->",t.getLocalizedMessage());
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("İl Bilgininzi Belirtiniz");
+                builder.setMessage("Yaşadığınız ildeki yemekleri görebilmek için profilinizden iletişim bilgilerinizi giriniz.İl bilginiz sistemde kayıtlı ancak halen yemekleri göremiyorsanız internet bağlantınızı kontrol ediniz.");
+                builder.setNegativeButton("İPTAL", new DialogInterface.OnClickListener(){
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        //İptal butonuna basılınca yapılacaklar.Sadece kapanması isteniyorsa boş bırakılacak
+
+                    }
+                });
+                builder.setPositiveButton("TAMAM", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        final ProfilFragment profilFragment =new ProfilFragment();
+                        FragmentManager fm = getFragmentManager();
+                        FragmentTransaction ft = fm.beginTransaction();
+                        ProfilFragment llf = new ProfilFragment();
+                        ft.replace(R.id.frame,profilFragment);
+                        ft.commit();
+                    }
+                });
+
+
+                builder.show();
 
             }
         });

@@ -2,6 +2,7 @@ package com.example.hayri.evyemekleri;
 
 import com.example.hayri.evyemekleri.Models.Iletisim;
 import com.example.hayri.evyemekleri.Models.IletisimBilgiEkle;
+import com.example.hayri.evyemekleri.Models.IletisimBilgiGuncelle;
 import com.example.hayri.evyemekleri.Models.KulAdi;
 import com.example.hayri.evyemekleri.Models.Model;
 import com.example.hayri.evyemekleri.Models.SehirList;
@@ -55,6 +56,10 @@ public interface Api {
     @POST("iletisimBilgiEkle.php")
     @FormUrlEncoded
     Call<IletisimBilgiEkle> iletisimBilgiEkle( @Field("kul_id") int kul_id, @Field("sehirAdi") String sehirAdi, @Field("adres_aciklama") String adres_aciklama, @Field("tel") String tel);
+
+    @POST("iletisimBilgisiGüncelle.php")
+    @FormUrlEncoded
+    Call<IletisimBilgiGuncelle> iletisimBilgisiGüncelle(@Field("kul_id") int kul_id, @Field("il_id") int il_id, @Field("adres_aciklama") String adres_aciklama, @Field("tel") String tel);
 
 }
 

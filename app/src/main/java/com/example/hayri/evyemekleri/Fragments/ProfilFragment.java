@@ -33,6 +33,7 @@ package com.example.hayri.evyemekleri.Fragments;
         import com.example.hayri.evyemekleri.Models.IletisimBilgiEkle;
         import com.example.hayri.evyemekleri.Models.YemekEkle;
         import com.example.hayri.evyemekleri.Models.YemekList;
+        import com.example.hayri.evyemekleri.ProfilYemekleriListele;
         import com.example.hayri.evyemekleri.R;
         import com.example.hayri.evyemekleri.SharedPref;
         import com.example.hayri.evyemekleri.İletisimBilgisiGoster;
@@ -53,14 +54,9 @@ package com.example.hayri.evyemekleri.Fragments;
  */
 public class ProfilFragment extends Fragment {
     TextView username;
-    Button btnLogout,iletisimBilgisiEkleIv,iletisimbilgisigetir_btn;
+    Button btnLogout,iletisimBilgisiEkleIv,iletisimbilgisigetir_btn,profilyemeklerigetir_btn;
     ImageView yemekEkleIv;
     ImageView yemekResmi;
-    RecyclerView rvYemekler;
-    List<FoodsItem> foodList;
-    List<CitysItem>cityList;
-
-    YemekAdapter yemekAdapter;
     private CityAdapter citysAdapter;
 
 
@@ -93,11 +89,6 @@ public class ProfilFragment extends Fragment {
         iletisimBilgisiEkleIv=myFragment.findViewById(R.id.add_iletisim_button);
         iletisimbilgisigetir_btn=myFragment.findViewById(R.id.iletisimbilgisigetir_btn);
 
-        rvYemekler=myFragment.findViewById(R.id.rvYemekler);
-        RecyclerView.LayoutManager layoutManager=new GridLayoutManager(getContext(),1);
-        rvYemekler.setLayoutManager(layoutManager);
-        foodList=new ArrayList<>();
-        cityList=new ArrayList<>();
 
         bitmap=null;
         imageString="";
@@ -126,7 +117,21 @@ public class ProfilFragment extends Fragment {
                 SharedPref.getInstance(getContext()).logout();
             }
         });
-        yemekListele(kul_id);
+        Log.i("kulıdProfil",""+kul_id);
+        profilyemeklerigetir_btn=myFragment.findViewById(R.id.kulyemeklerigetir_btn);
+        profilyemeklerigetir_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(),ProfilYemekleriListele.class);
+                intent.putExtra("kul_id",kul_id);
+                startActivity(intent);
+            }
+        });
+
+
+
+
+
         Log.i("kul", "onCreateView: "+kul_id);
         iletisimbilgisigetir_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,7 +187,8 @@ public class ProfilFragment extends Fragment {
                  String miktar=yemekMiktari.getText().toString();
                  double yemekFiy= Double.parseDouble(yemekFiyati.getText().toString());
 
-                 addYemek(kat_ıd,kul_id,yemekName,yemekFiy,7,44,imageToString(),miktar);
+                 //addYemek(kat_ıd,kul_id,yemekName,yemekFiy,7,44,imageToString(),miktar);
+                 iletisimBilgisiGoster(kul_id,kat_ıd,yemekName,yemekFiy,7,imageToString(),miktar);
                  yemekAdi.setText("");
                  yemekMiktari.setText("");
                  yemekFiyati.setText("");
@@ -248,9 +254,35 @@ public class ProfilFragment extends Fragment {
             }
             @Override
             public void onFailure(Call<YemekEkle> call, Throwable t) {
-               // Toast.makeText(ProfilFragment.this,t.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),t.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void iletisimBilgisiGoster(final int kul_id, final int kat_id, final String yemekName, final double yemekFiy, final int yorum_puani, final String yemekresim, final String miktar){
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ApiClient.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create()) //Here we are using the GsonConverterFactory to directly convert json data to object
+                .build();
+        Api api = retrofit.create(Api.class);
+        Call<Iletisim> call = api.getIletisimBilgisi(kul_id);
+        call.enqueue(new Callback<Iletisim>() {
+
+            @Override
+            public void onResponse(Call<Iletisim> call, Response<Iletisim> response) {
+                Log.i("kul",""+kul_id);
+                int il_id=Integer.valueOf(response.body().getIlid());
+                addYemek(kat_id,kul_id,yemekName,yemekFiy,yorum_puani,il_id,yemekresim,miktar);
+            }
+            @Override
+            public void onFailure(Call<Iletisim> call, Throwable t) {
+                // Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.d("error-------------->",t.getLocalizedMessage());
+
+            }
+        });
+
     }
 
     private void addİletisim(int kul_id, String sehirAdi,String adres_aciklama,String tel) {
@@ -268,12 +300,11 @@ public class ProfilFragment extends Fragment {
             }
         });
     }
-
     void galeriAc()
     {Intent intent=new Intent();
-    intent.setType("image/*");
-    intent.setAction(Intent.ACTION_GET_CONTENT);
-    startActivityForResult(intent,777);
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent,777);
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -300,34 +331,9 @@ public class ProfilFragment extends Fragment {
             return imageString;
         }
         else{
-        return imageString;
+            return imageString;
         }
     }
-    public void yemekListele(int kul_id)
-    {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ApiClient.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create()) //Here we are using the GsonConverterFactory to directly convert json data to object
-                .build();
-        Api api = retrofit.create(Api.class);
-        Call<YemekList> call = api.getFoods(kul_id);
-        call.enqueue(new Callback<YemekList>() {
-            @Override
-            public void onResponse(Call<YemekList> call, Response<YemekList> response) {
-                foodList = response.body().getFoods();
-                yemekAdapter=new YemekAdapter(foodList,getContext());
-                rvYemekler.setAdapter(yemekAdapter);
-                Log.i("Yemekler",response.body().getFoods().toString());
-            }
-            @Override
-            public void onFailure(Call<YemekList> call, Throwable t) {
-               // Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.d("error-------------->",t.getLocalizedMessage());
-            }
-        });
-    }
-
-
 
 
 }

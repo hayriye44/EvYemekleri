@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,7 +20,7 @@ import com.example.hayri.evyemekleri.Fragments.ProfilFragment;
 
 
 public class MainActivity extends AppCompatActivity {
-
+    public int kul_id;
 Window window;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,15 @@ Window window;
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         }
+
+
+
+       /* Bundle extras = getIntent().getExtras();
+        String il_id = extras.getString("secilen_il_id");
+        int il=Integer.valueOf(il_id);
+        Log.i("il_id",""+il_id);
+        if(il!=0)
+        {AllFoodList(2,il);}*/
         //Bottom menüde mebülere tıklanınca ortadaki alanı değiştime  ama menünün altta kalması
         BottomNavigationView navigationView=findViewById(R.id.bottom_nav);
 
@@ -84,8 +94,11 @@ Window window;
         int id = item.getItemId();
         switch (id){
             case R.id.action_il:
-                startActivity(new Intent(this,İlSecim.class));
-
+                //startActivity(new Intent(this,İlSecim.class));
+                kul_id=SharedPref.getInstance(this).LoggedInUserId();
+                Intent intent=new Intent(getApplicationContext(),İletisimBilgisiGuncelleActivity.class);
+                intent.putExtra("kul_id",kul_id);
+                getApplicationContext().startActivity(intent);
                 return true;
 
             default:

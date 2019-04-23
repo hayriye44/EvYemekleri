@@ -44,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
             window.setStatusBarColor(this.getResources().getColor(R.color.statusBar));
 
         }
+
         username_input = findViewById(R.id.userName);
         password_input = findViewById(R.id.loginPassword);
         register = findViewById(R.id.register);
@@ -65,7 +66,6 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
     private void validateUserData() {
 
@@ -91,8 +91,6 @@ public class LoginActivity extends AppCompatActivity {
             btnLogin.setEnabled(true);
             return;
         }
-
-
 
         //Login User if everything is fine
         loginUser(username,password);

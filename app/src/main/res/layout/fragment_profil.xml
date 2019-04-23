@@ -81,14 +81,14 @@
             <android.support.v7.widget.CardView
                 android:id="@+id/cv_iletisim"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="50dp"
                 android:layout_margin="10dp"
                 app:cardElevation="5dp"
                 app:cardCornerRadius="10dp"
                 >
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -98,14 +98,21 @@
                             android:id="@+id/tvYemekler"
                             android:layout_width="0dp"
                             android:layout_weight="5"
-                            android:layout_height="40dp"
+                            android:layout_height="50dp"
                             android:layout_alignParentStart="true"
                             android:layout_alignParentTop="true"
                             android:layout_marginTop="13dp"
                             android:text="Yemekleriniz "
-                            android:textSize="16dp"
+                            android:textSize="20dp"
                             android:textStyle="bold"
                             android:layout_marginLeft="10dp"/>
+                        <Button
+                            android:id="@+id/kulyemeklerigetir_btn"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/list_icon" />
 
                         <ImageView
                             android:id="@+id/add_yemek_button"
@@ -116,10 +123,7 @@
                             android:background="@drawable/add_button" />
                     </LinearLayout>
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rvYemekler"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+
 
 
 

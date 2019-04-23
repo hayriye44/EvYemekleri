@@ -1,6 +1,7 @@
 package com.example.hayri.evyemekleri;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ public class İlSecim extends AppCompatActivity {
     private RecyclerView citylistrecyclerview;
     private CityAdapter citysAdapter;
     private List<CitysItem> cityList;
+   // public int kul_id;
     Window window;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +41,15 @@ public class İlSecim extends AppCompatActivity {
             window.setStatusBarColor(this.getResources().getColor(R.color.statusBar));
 
         }
-        tanimla();
-        getCitys();
+        //tanimla();
+        //getCitys();
+
+
+       /* kul_id=SharedPref.getInstance(this).LoggedInUserId();
+        Intent intent=new Intent(getApplicationContext(),İletisimBilgisiGuncelleActivity.class);
+        intent.putExtra("kul_id",kul_id);
+        getApplicationContext().startActivity(intent);*/
+
     }
     public void tanimla(){
         cityList=new ArrayList<>();
@@ -64,15 +73,6 @@ public class İlSecim extends AppCompatActivity {
                 citysAdapter=new CityAdapter(cityList,İlSecim.this);
                 citylistrecyclerview.setAdapter(citysAdapter);
                 Log.i("Listem",response.body().getCitys().toString());
-                //looping through all the heroes and inserting the names inside the string array
-             /*   for (int i =0; i < fruitList.size(); i++) {
-                    String name = fruitList.get(i).getName();
-                    String image = fruitList.get(i).getImage();
-
-                  //  fruitsList.add(new Fruits(name,image));
-                }*/
-               // adapter.notifyDataSetChanged();
-              //  recyclerView.setAdapter(adapter);
             }
             @Override
             public void onFailure(Call<SehirList> call, Throwable t) {
