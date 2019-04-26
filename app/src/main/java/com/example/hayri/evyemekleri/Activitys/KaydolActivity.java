@@ -1,4 +1,4 @@
-package com.example.hayri.evyemekleri;
+package com.example.hayri.evyemekleri.Activitys;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +14,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.hayri.evyemekleri.Api;
+import com.example.hayri.evyemekleri.ApiClient;
 import com.example.hayri.evyemekleri.Models.Model;
+import com.example.hayri.evyemekleri.R;
 
 import retrofit2.Call;
 import retrofit2.Callback;

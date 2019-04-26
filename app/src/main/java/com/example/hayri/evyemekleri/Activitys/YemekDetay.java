@@ -1,16 +1,20 @@
-package com.example.hayri.evyemekleri;
+package com.example.hayri.evyemekleri.Activitys;
 
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.hayri.evyemekleri.Api;
+import com.example.hayri.evyemekleri.ApiClient;
 import com.example.hayri.evyemekleri.Models.KulAdi;
-import com.example.hayri.evyemekleri.Models.Model;
+import com.example.hayri.evyemekleri.R;
 import com.squareup.picasso.Picasso;
 
 import retrofit2.Call;
@@ -18,6 +22,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class YemekDetay extends AppCompatActivity {
+    Window window;
     private TextView tvKategori,tvYemekAdi,tvYemekMiktari,tvYemekFiyati,tvYemekPuani,tvSatıcıAd;
     private Button btnsiparis,btnsatici_profil,btn_favori;
     ImageView yemekresim;
@@ -27,6 +32,12 @@ public class YemekDetay extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_yemek_detay);
+        //statusbar rengini değişme
+        if(Build.VERSION.SDK_INT>=21)
+        {
+            window=this.getWindow();
+            window.setStatusBarColor(this.getResources().getColor(R.color.statusBar));
+        }
         tanimla();
         Bundle extras = getIntent().getExtras();
         String resim = extras.getString("resim");
@@ -42,8 +53,17 @@ public class YemekDetay extends AppCompatActivity {
         tvYemekMiktari.setText(yemekmikar);
         tvYemekFiyati.setText(yemekfiyati);
         tvYemekPuani.setText(yemekpuani);
-
         Picasso.get().load(resim).into(yemekresim);
+        btnsatici_profil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), KulIdProfil.class);
+                i.putExtra("kul_id",userId);
+                String saticiAd= tvSatıcıAd.getText().toString();
+                i.putExtra("kulAdi",saticiAd);
+                startActivity(i);
+            }
+        });
     }
     public void tanimla(){
         yemekresim=(ImageView)findViewById(R.id.yemekResim);
@@ -53,6 +73,7 @@ public class YemekDetay extends AppCompatActivity {
         tvYemekFiyati=(TextView)findViewById(R.id.tvYemekFiyati);
         tvYemekPuani=(TextView)findViewById(R.id.tvYemekPuani);
         tvSatıcıAd=(TextView)findViewById(R.id.tvSatıcıAd);
+        btnsatici_profil=(Button)findViewById(R.id.btnsatici_profil);
     }
 
 

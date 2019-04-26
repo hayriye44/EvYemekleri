@@ -1,5 +1,6 @@
 package com.example.hayri.evyemekleri;
 
+import com.example.hayri.evyemekleri.Models.BegenilenYemeklerList;
 import com.example.hayri.evyemekleri.Models.Iletisim;
 import com.example.hayri.evyemekleri.Models.IletisimBilgiEkle;
 import com.example.hayri.evyemekleri.Models.IletisimBilgiGuncelle;
@@ -61,5 +62,9 @@ public interface Api {
     @FormUrlEncoded
     Call<IletisimBilgiGuncelle> iletisimBilgisiGüncelle(@Field("kul_id") int kul_id, @Field("il_id") int il_id, @Field("adres_aciklama") String adres_aciklama, @Field("tel") String tel);
 
+
+    @POST("YüksekPuanliYemek.php")
+    @FormUrlEncoded
+    Call<BegenilenYemeklerList> getBegenilenYemeklerGetir(@Field("kul_id") int kul_id);
 }
 

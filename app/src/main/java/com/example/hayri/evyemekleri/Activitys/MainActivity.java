@@ -1,4 +1,4 @@
-package com.example.hayri.evyemekleri;
+package com.example.hayri.evyemekleri.Activitys;
 
 import android.content.Intent;
 import android.os.Build;
@@ -8,15 +8,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
 
+import com.example.hayri.evyemekleri.Activitys.LoginActivity;
+import com.example.hayri.evyemekleri.Activitys.İletisimBilgisiGuncelleActivity;
 import com.example.hayri.evyemekleri.Fragments.AnasayfaFragment;
 import com.example.hayri.evyemekleri.Fragments.FovorilerFragment;
 import com.example.hayri.evyemekleri.Fragments.ProfilFragment;
+import com.example.hayri.evyemekleri.R;
+import com.example.hayri.evyemekleri.SharedPref;
 
 
 public class MainActivity extends AppCompatActivity {

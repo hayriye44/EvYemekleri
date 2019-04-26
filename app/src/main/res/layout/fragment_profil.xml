@@ -184,7 +184,7 @@
                 </LinearLayout>
             </android.support.v7.widget.CardView>
             <android.support.v7.widget.CardView
-                android:id="@+id/cv_begenilenyemekleri"
+                android:id="@+id/cv_gorüsmeleriniz"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_margin="10dp"

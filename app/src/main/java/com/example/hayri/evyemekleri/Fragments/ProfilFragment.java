@@ -7,8 +7,6 @@ package com.example.hayri.evyemekleri.Fragments;
         import android.os.Vibrator;
         import android.provider.MediaStore;
         import android.support.v4.app.Fragment;
-        import android.support.v7.widget.GridLayoutManager;
-        import android.support.v7.widget.RecyclerView;
         import android.util.Base64;
         import android.util.Log;
         import android.view.LayoutInflater;
@@ -24,24 +22,18 @@ package com.example.hayri.evyemekleri.Fragments;
         import android.widget.Toast;
 
         import com.example.hayri.evyemekleri.Adapters.CityAdapter;
-        import com.example.hayri.evyemekleri.Adapters.YemekAdapter;
         import com.example.hayri.evyemekleri.Api;
         import com.example.hayri.evyemekleri.ApiClient;
-        import com.example.hayri.evyemekleri.Models.CitysItem;
-        import com.example.hayri.evyemekleri.Models.FoodsItem;
         import com.example.hayri.evyemekleri.Models.Iletisim;
         import com.example.hayri.evyemekleri.Models.IletisimBilgiEkle;
         import com.example.hayri.evyemekleri.Models.YemekEkle;
-        import com.example.hayri.evyemekleri.Models.YemekList;
-        import com.example.hayri.evyemekleri.ProfilYemekleriListele;
+        import com.example.hayri.evyemekleri.Activitys.ProfilYemekleriListele;
         import com.example.hayri.evyemekleri.R;
         import com.example.hayri.evyemekleri.SharedPref;
-        import com.example.hayri.evyemekleri.İletisimBilgisiGoster;
+        import com.example.hayri.evyemekleri.Activitys.İletisimBilgisiGoster;
 
         import java.io.ByteArrayOutputStream;
         import java.io.IOException;
-        import java.util.ArrayList;
-        import java.util.List;
 
         import retrofit2.Call;
         import retrofit2.Callback;

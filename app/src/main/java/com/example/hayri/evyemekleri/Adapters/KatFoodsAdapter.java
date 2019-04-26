@@ -11,10 +11,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.hayri.evyemekleri.Fragments.AnasayfaFragment;
 import com.example.hayri.evyemekleri.Models.FoodsItem;
 import com.example.hayri.evyemekleri.R;
-import com.example.hayri.evyemekleri.YemekDetay;
+import com.example.hayri.evyemekleri.Activitys.YemekDetay;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

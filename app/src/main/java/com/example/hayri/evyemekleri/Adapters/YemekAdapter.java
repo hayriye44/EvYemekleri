@@ -19,10 +19,12 @@ import java.util.List;
 public class YemekAdapter extends  RecyclerView.Adapter<YemekAdapter.ViewHolder>{
         List<FoodsItem> list;
         Context context;
+        boolean goster;
 
-public YemekAdapter(List<FoodsItem> list, Context context) {
+public YemekAdapter(List<FoodsItem> list,boolean goster2, Context context) {
         this.list = list;
         this.context = context;
+        this. goster=goster2;
         }
     @NonNull
     @Override
@@ -76,6 +78,9 @@ public YemekAdapter(List<FoodsItem> list, Context context) {
         viewHolder.tvYemekMiktari.setText(list.get(i).getMiktar().toString());
         viewHolder.tvYemekFiyati.setText(list.get(i).getYemekFiyat().toString());
         viewHolder.tvYemekPuani.setText(list.get(i).getYorumPuani().toString());
+        if(goster==true)
+        { viewHolder.btnYemekSil.setVisibility(View.VISIBLE);}
+        else {viewHolder.btnYemekSil.setVisibility(View.INVISIBLE);}
         Picasso.get().load(list.get(i).getYemekresim()).into(viewHolder.ivYemekResmi);
 
     }
