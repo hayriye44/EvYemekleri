@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="10dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/ivYemekResmi"
+            android:layout_width="0dp"
+            android:layout_weight="1.9"
+            android:layout_height="85dp"
+            android:layout_marginTop="5dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/man"
+            />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="6"
+            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1.7"
+                    android:layout_height="wrap_content"
+                    android:textStyle="normal"
+                    android:textSize="10dp"
+                    android:text="Yemek Adı:"
+                    android:layout_margin="2dp"/>
+                <TextView
+                    android:id="@+id/tvYemekAdi"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content"
+                    android:textStyle="normal"
+                    android:textSize="10dp"
+                    android:text="Sarma"
+                    android:layout_margin="2dp"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1.7"
+                    android:layout_height="wrap_content"
+                    android:textStyle="normal"
+                    android:textSize="10dp"
+                    android:text="Mikarı:"
+                    android:layout_margin="2dp"/>
+                <TextView
+                    android:id="@+id/tvYemekMiktari"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content"
+                    android:textStyle="normal"
+                    android:textSize="10dp"
+                    android:text="Sarma"
+                    android:layout_margin="2dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1.7"
+                    android:layout_height="wrap_content"
+                    android:textStyle="normal"
+                    android:textSize="10dp"
+                    android:text="Fiyatı:"
+                    android:layout_margin="2dp"/>
+                <TextView
+                    android:id="@+id/tvYemekFiyati"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content"
+                    android:textStyle="normal"
+                    android:textSize="10dp"
+                    android:text="Sarma"
+                    android:layout_margin="2dp"/>
+            </LinearLayout>
+            <Button
+                android:id="@+id/favoridencikar"
+                android:layout_margin="2dp"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:text="Favoriden Çıkar"
+                android:background="#fae736"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

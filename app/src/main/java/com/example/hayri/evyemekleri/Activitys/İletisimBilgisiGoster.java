@@ -14,6 +14,7 @@ import com.example.hayri.evyemekleri.Api;
 import com.example.hayri.evyemekleri.ApiClient;
 import com.example.hayri.evyemekleri.Models.Iletisim;
 import com.example.hayri.evyemekleri.R;
+import com.example.hayri.evyemekleri.SharedPref;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,6 +26,8 @@ public class İletisimBilgisiGoster extends AppCompatActivity {
     TextView ili,adresi,teli;
     Window window;
     Button iletisim_güncelle;
+    boolean goster;
+    TextView baslik;
    public String il,adres,tel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,15 @@ public class İletisimBilgisiGoster extends AppCompatActivity {
         final int kul_id = extras.getInt("kul_id");
         Log.i("kulıdİletisimBilgisi",""+kul_id);
         iletisim_güncelle=(Button)findViewById(R.id.iletisim_güncelle_btn);
+        int girisyapankul_id;
+        girisyapankul_id=SharedPref.getInstance(this).LoggedInUserId();
+        baslik=findViewById(R.id.tvBaslik);
+        if(kul_id== girisyapankul_id)
+        {
+            iletisim_güncelle.setVisibility(View.VISIBLE);
+        }
+        else{iletisim_güncelle.setVisibility(View.INVISIBLE);baslik.setText("Satıcının İletişim Bilgileri");}
+
         iletisim_güncelle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,11 +1,15 @@
 package com.example.hayri.evyemekleri;
 
 import com.example.hayri.evyemekleri.Models.BegenilenYemeklerList;
+import com.example.hayri.evyemekleri.Models.FavoriIslemler;
+import com.example.hayri.evyemekleri.Models.Favoriler;
+import com.example.hayri.evyemekleri.Models.FavorilerList;
 import com.example.hayri.evyemekleri.Models.Iletisim;
 import com.example.hayri.evyemekleri.Models.IletisimBilgiEkle;
 import com.example.hayri.evyemekleri.Models.IletisimBilgiGuncelle;
 import com.example.hayri.evyemekleri.Models.KulAdi;
 import com.example.hayri.evyemekleri.Models.Model;
+import com.example.hayri.evyemekleri.Models.ProfilFoto;
 import com.example.hayri.evyemekleri.Models.SehirList;
 import com.example.hayri.evyemekleri.Models.YemekEkle;
 import com.example.hayri.evyemekleri.Models.YemekList;
@@ -62,9 +66,32 @@ public interface Api {
     @FormUrlEncoded
     Call<IletisimBilgiGuncelle> iletisimBilgisiGüncelle(@Field("kul_id") int kul_id, @Field("il_id") int il_id, @Field("adres_aciklama") String adres_aciklama, @Field("tel") String tel);
 
-
+    //aynı tür cevaplar döndüğü için burdada İletisimBilgisiGüncelle modelini kullandım
+  /*  @POST("profilfotoGüncelle.php")
+    @FormUrlEncoded
+    Call<IletisimBilgiGuncelle> profilfotoGüncelle(@Field("kul_id") int kul_id,@Field("userfoto") String userfoto);
+*/
     @POST("YüksekPuanliYemek.php")
     @FormUrlEncoded
     Call<BegenilenYemeklerList> getBegenilenYemeklerGetir(@Field("kul_id") int kul_id);
+
+    @POST("favoriler.php")
+    @FormUrlEncoded
+    Call<Favoriler> favoriKontrol(@Field("uye_id") String uye_id, @Field("yemek_id") String yemek_id);
+
+
+    @POST("favoriIslemler.php")
+    @FormUrlEncoded
+    Call<FavoriIslemler> favoriIslemler(@Field("uye_id") String uye_id, @Field("yemek_id") String yemek_id);
+
+    @POST("favorilerListesi.php")
+    @FormUrlEncoded
+    Call<FavorilerList> getfavorilerList(@Field("uye_id") String uye_id);
+
+/*
+    @POST("ProfilFotoGetir.php")
+    @FormUrlEncoded
+    Call<ProfilFoto> getProfilFoto(@Field("kul_id") int kul_id);
+*/
 }
 

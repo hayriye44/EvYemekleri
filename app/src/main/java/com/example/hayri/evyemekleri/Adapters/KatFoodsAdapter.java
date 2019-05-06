@@ -73,6 +73,7 @@ public class KatFoodsAdapter extends RecyclerView.Adapter<KatFoodsAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(context,YemekDetay.class);
+                intent.putExtra("yemek_id",list.get(getir).getYemekId());
                 intent.putExtra("resim",list.get(getir).getYemekresim());
                 intent.putExtra("Kategori", katAdi);
                 intent.putExtra("YemekAdi",list.get(getir).getYemekAdi().toString());

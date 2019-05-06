@@ -57,8 +57,6 @@ public class AnasayfaFragment extends Fragment {
 
 
 
-
-
         Button anaYemek = (Button)view.findViewById(R.id.anaYemek);
         Button corbalar = (Button)view.findViewById(R.id.corbalar);
         Button salata = (Button)view.findViewById(R.id.salata);

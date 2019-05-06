@@ -1,4 +1,5 @@
 package com.example.hayri.evyemekleri.Fragments;
+        import android.app.Activity;
         import android.app.AlertDialog;
         import android.content.Intent;
         import android.graphics.Bitmap;
@@ -6,6 +7,7 @@ package com.example.hayri.evyemekleri.Fragments;
         import android.os.Bundle;
         import android.os.Vibrator;
         import android.provider.MediaStore;
+        import android.support.annotation.NonNull;
         import android.support.v4.app.Fragment;
         import android.util.Base64;
         import android.util.Log;
@@ -26,15 +28,26 @@ package com.example.hayri.evyemekleri.Fragments;
         import com.example.hayri.evyemekleri.ApiClient;
         import com.example.hayri.evyemekleri.Models.Iletisim;
         import com.example.hayri.evyemekleri.Models.IletisimBilgiEkle;
+        import com.example.hayri.evyemekleri.Models.IletisimBilgiGuncelle;
+        import com.example.hayri.evyemekleri.Models.ProfilFoto;
         import com.example.hayri.evyemekleri.Models.YemekEkle;
         import com.example.hayri.evyemekleri.Activitys.ProfilYemekleriListele;
         import com.example.hayri.evyemekleri.R;
         import com.example.hayri.evyemekleri.SharedPref;
         import com.example.hayri.evyemekleri.Activitys.İletisimBilgisiGoster;
+        import com.google.android.gms.tasks.OnCompleteListener;
+        import com.google.android.gms.tasks.OnFailureListener;
+        import com.google.android.gms.tasks.OnSuccessListener;
+        import com.google.android.gms.tasks.Task;
+        import com.google.firebase.storage.FirebaseStorage;
+        import com.google.firebase.storage.StorageReference;
+        import com.google.firebase.storage.UploadTask;
+        import com.squareup.picasso.Picasso;
 
         import java.io.ByteArrayOutputStream;
         import java.io.IOException;
 
+        import de.hdodenhof.circleimageview.CircleImageView;
         import retrofit2.Call;
         import retrofit2.Callback;
         import retrofit2.Response;
@@ -51,13 +64,13 @@ public class ProfilFragment extends Fragment {
     ImageView yemekResmi;
     private CityAdapter citysAdapter;
 
-
-    Bitmap bitmap;
+    Bitmap bitmap,bitmap2;
     int kat_ıd;
     int kul_id;
     private View myFragment;
     String imageString;
     Vibrator v;
+    ImageView profilephoto;
     //change to your register url
     final String yemekEkleUrl = "http://ysiparis.tk/yemekEkle.php";
     private String[] kategoriler={"Anayemekler","Çorbalar","Salata ve Turşular","Hamur İşleri","Pilavlar","Tatlılar"};
@@ -67,6 +80,11 @@ public class ProfilFragment extends Fragment {
     private ArrayAdapter<String> dataAdapterKategoriler;
 
     EditText yemekFiyati,yemekAdi,yemekMiktari,adres,tel,il;
+
+    StorageReference storageReference;
+    FirebaseStorage firebaseStorage;
+
+
     public ProfilFragment() {
         // Required empty public constructor
     }
@@ -80,10 +98,31 @@ public class ProfilFragment extends Fragment {
         yemekEkleIv=myFragment.findViewById(R.id.add_yemek_button);
         iletisimBilgisiEkleIv=myFragment.findViewById(R.id.add_iletisim_button);
         iletisimbilgisigetir_btn=myFragment.findViewById(R.id.iletisimbilgisigetir_btn);
+        //getting logged in user name
+        String loggedUsename = SharedPref.getInstance(getActivity()).LoggedInUser();
+        kul_id=SharedPref.getInstance(getActivity()).LoggedInUserId();
 
 
-        bitmap=null;
-        imageString="";
+        bitmap=null;imageString="";
+        profilephoto=(ImageView)myFragment.findViewById(R.id.profile_image);
+        profilephoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                galeriAcProfile();
+            }
+        });
+
+
+       // profilFotoGetir(kul_id);
+        username.setText("Username : "+loggedUsename);
+        //logging out
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().finish();
+                SharedPref.getInstance(getContext()).logout();
+            }
+        });
         yemekEkleIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,18 +136,6 @@ public class ProfilFragment extends Fragment {
                 addİletisimAlert();
             }
         });
-        //getting logged in user name
-        String loggedUsename = SharedPref.getInstance(getActivity()).LoggedInUser();
-        kul_id=SharedPref.getInstance(getActivity()).LoggedInUserId();
-        username.setText("Username : "+loggedUsename);
-        //logging out
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().finish();
-                SharedPref.getInstance(getContext()).logout();
-            }
-        });
         Log.i("kulıdProfil",""+kul_id);
         profilyemeklerigetir_btn=myFragment.findViewById(R.id.kulyemeklerigetir_btn);
         profilyemeklerigetir_btn.setOnClickListener(new View.OnClickListener() {
@@ -119,11 +146,6 @@ public class ProfilFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
-
-
-
-
         Log.i("kul", "onCreateView: "+kul_id);
         iletisimbilgisigetir_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,8 +155,29 @@ public class ProfilFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        firebaseStorage=FirebaseStorage.getInstance();
+        storageReference=firebaseStorage.getReference();
+        kullanicifotoGetir();
+
         return myFragment;
     }
+
+    public void kullanicifotoGetir()
+    { StorageReference ref=storageReference.child("kullaniciresimleri").child(String.valueOf(kul_id)+".jpg");
+
+        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).into(profilephoto);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+    }
+
     public void addYemekAlert()
     {
         LayoutInflater layoutInflater=this.getLayoutInflater();
@@ -250,7 +293,6 @@ public class ProfilFragment extends Fragment {
             }
         });
     }
-
     public void iletisimBilgisiGoster(final int kul_id, final int kat_id, final String yemekName, final double yemekFiy, final int yorum_puani, final String yemekresim, final String miktar){
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -298,6 +340,11 @@ public class ProfilFragment extends Fragment {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent,777);
     }
+    void galeriAcProfile()
+    {Intent intent=new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+    //Activity içinde seçilen resmi gösterme
+    startActivityForResult(intent,5);
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -311,6 +358,35 @@ public class ProfilFragment extends Fragment {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+        //seçtiğimiz resme ulaşmak için
+        if(requestCode==5 && resultCode==Activity.RESULT_OK)
+        {
+            //filepath
+            Uri filepath=data.getData();
+            StorageReference ref=storageReference.child("kullaniciresimleri").child(String.valueOf(kul_id)+".jpg");
+           ref.putFile(filepath).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+               @Override
+               public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                    if(task.isSuccessful()){
+                        Toast.makeText(getContext(),"Resim başarıyla güncellendi",Toast.LENGTH_LONG).show();
+                        kullanicifotoGetir();
+
+                    }
+                    else {
+                        Toast.makeText(getContext(),"Resim güncellenemedi",Toast.LENGTH_LONG).show();
+                    }
+               }
+           });
+
+            /* try {
+                bitmap=MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),filepath);
+                profilephoto.setImageBitmap(bitmap);
+                profilephoto.setVisibility(View.VISIBLE);
+                //profilephotoGüncelle(kul_id,imageToString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }*/
         }
 
     }
